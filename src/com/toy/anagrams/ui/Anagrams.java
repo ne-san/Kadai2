@@ -35,6 +35,10 @@ import com.toy.anagrams.lib.WordLibrary;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.util.Random;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
@@ -42,6 +46,7 @@ import javax.swing.SwingUtilities;
  * Main window of the Anagram Game application.
  */
 public class Anagrams extends JFrame {
+	
 
     public static void main(String[] args) {
         /* Set the Nimbus look and feel */
@@ -74,7 +79,8 @@ public class Anagrams extends JFrame {
             }
         });
     }
-
+    int k;
+    int index;
     private int wordIdx = 0;
     private WordLibrary wordLibrary;
 
@@ -85,7 +91,7 @@ public class Anagrams extends JFrame {
         initComponents();
         getRootPane().setDefaultButton(guessButton);
         //scrambledWord.setText(wordLibrary.getScrambledWord(wordIdx));
-        scrambledWord.setText(Scrambled());
+        scrambledWord.setText(Scrambled(k));
         pack();
         guessedWord.requestFocusInWindow();
         // Center in the screen
@@ -195,6 +201,10 @@ public class Anagrams extends JFrame {
         nextTrial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 nextTrialActionPerformed(evt);
+                index = selectLevel.getSelectedIndex();
+                if(index==0) k=0;
+                else if(index==1) {k=1;}
+                else k=2;
             }
         });
         buttonsPanel.add(nextTrial, new java.awt.GridBagConstraints());
@@ -213,7 +223,14 @@ public class Anagrams extends JFrame {
         gridBagConstraints.gridy = 2;
         mainPanel.add(levelLabel, gridBagConstraints);
 
-        selectLevel.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Level 1", "Level 2", "Level 3" }));
+        
+        String[] combodata= { "Level 1", "Level 2", "Level 3" };
+        DefaultComboBoxModel model = new DefaultComboBoxModel(combodata);
+        selectLevel.setModel(model);
+        JComboBox combo = new JComboBox(combodata);
+        
+        
+        
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
@@ -259,25 +276,35 @@ public class Anagrams extends JFrame {
 
         feedbackLabel.setText(" ");
         //scrambledWord.setText(wordLibrary.getScrambledWord(wordIdx));
-        scrambledWord.setText(Scrambled());
+        scrambledWord.setText(Scrambled(k));
         guessedWord.setText("");
         getRootPane().setDefaultButton(guessButton);
 
         guessedWord.requestFocusInWindow();
     }//GEN-LAST:event_nextTrialActionPerformed
     
-    public String Scrambled() {
+    public String Scrambled(int k) {
     	String sc = wordLibrary.getWord(wordIdx);
     	char[] chars = sc.toCharArray();
-    	char[] newChar = sc.toCharArray();
-    	int n = 0;
+    	//char[] newChar = sc.toCharArray();
+    	
+    	for(int i=0; i<chars.length-k; i++){
+    		Random rand = new Random();
+    		int n = rand.nextInt(chars.length);
+    		char temp = chars[i];
+    		chars[i] = chars[n];
+    		chars[n] = temp;  		
+    	}
+    	
+    	/*int n = 0;
     	int m = chars.length-1;
     	while(n < chars.length){
     		newChar[n] = chars[m];
     		n++;
     		m--;
     	}
-    	String newSc = new String(newChar);
+    	*/
+    	String newSc = new String(chars);
     	return newSc;
     }
 
@@ -316,7 +343,7 @@ public class Anagrams extends JFrame {
     private javax.swing.JButton nextTrial;
     private javax.swing.JLabel scrambledLabel;
     private javax.swing.JTextField scrambledWord;
-    private javax.swing.JComboBox selectLevel;
+    private javax.swing.JComboBox selectLevel;   
     // End of variables declaration//GEN-END:variables
 
 }
