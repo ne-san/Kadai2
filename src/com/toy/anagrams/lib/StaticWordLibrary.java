@@ -85,7 +85,7 @@ final class StaticWordLibrary extends WordLibrary {
         "information"
         };
 
-    private static final String[] SCRAMBLED_WORD_LIST = {
+   /*private static final String[] SCRAMBLED_WORD_LIST = {
         "batsartcoin",
         "maibuguos",
         "ratimhteci",
@@ -132,7 +132,7 @@ final class StaticWordLibrary extends WordLibrary {
         "nuisngde",
         "rtdatioialn",
         "fntamriooni"
-    };
+    };*/
     
     final static WordLibrary DEFAULT = new StaticWordLibrary();
 
@@ -156,9 +156,9 @@ final class StaticWordLibrary extends WordLibrary {
      * @param idx index of required word
      * @return word at that index in its scrambled form
      */
-    public String getScrambledWord(int idx) {
+    /*public String getScrambledWord(int idx) {
         return SCRAMBLED_WORD_LIST[idx];
-    }
+    }*/
 
     /**
      * Gets the number of words in the library.
