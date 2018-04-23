@@ -84,7 +84,8 @@ public class Anagrams extends JFrame {
         
         initComponents();
         getRootPane().setDefaultButton(guessButton);
-        scrambledWord.setText(wordLibrary.getScrambledWord(wordIdx));
+        //scrambledWord.setText(wordLibrary.getScrambledWord(wordIdx));
+        scrambledWord.setText(Scrambled());
         pack();
         guessedWord.requestFocusInWindow();
         // Center in the screen
@@ -257,12 +258,28 @@ public class Anagrams extends JFrame {
         wordIdx = (wordIdx + 1) % wordLibrary.getSize();
 
         feedbackLabel.setText(" ");
-        scrambledWord.setText(wordLibrary.getScrambledWord(wordIdx));
+        //scrambledWord.setText(wordLibrary.getScrambledWord(wordIdx));
+        scrambledWord.setText(Scrambled());
         guessedWord.setText("");
         getRootPane().setDefaultButton(guessButton);
 
         guessedWord.requestFocusInWindow();
     }//GEN-LAST:event_nextTrialActionPerformed
+    
+    public String Scrambled() {
+    	String sc = wordLibrary.getWord(wordIdx);
+    	char[] chars = sc.toCharArray();
+    	char[] newChar = sc.toCharArray();
+    	int n = 0;
+    	int m = chars.length-1;
+    	while(n < chars.length){
+    		newChar[n] = chars[m];
+    		n++;
+    		m--;
+    	}
+    	String newSc = new String(newChar);
+    	return newSc;
+    }
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
         System.exit(0);
